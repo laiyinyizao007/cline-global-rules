@@ -1,0 +1,232 @@
+# 项目目录结构
+
+**遵循模块化和清晰的目录组织原则**
+
+---
+
+## 标准目录结构
+
+```
+项目根目录/
+├── .clinerules/              # Cline AI 规则
+│   ├── ACT/                  # 实现模式规则
+│   │   ├── implement.mdc     # 实现工作流
+│   │   └── debug.mdc         # 调试工作流
+│   ├── PLAN/                 # 规划模式规则
+│   │   └── plan.mdc          # 规划工作流
+│   ├── memory.mdc            # 记忆系统
+│   ├── directory-structure.mdc  # 目录结构（本文件）
+│   ├── rules.mdc             # 通用规则
+│   ├── error-documentation.mdc  # 错误文档
+│   └── lessons-learned.mdc   # 经验教训
+│
+├── docs/                     # 项目文档
+│   ├── product_requirement_docs.md  # 产品需求文档
+│   ├── architecture.md       # 系统架构
+│   ├── technical.md          # 技术规范
+│   └── literature/           # 文献调研（可选）
+│
+├── tasks/                    # 任务管理
+│   ├── active_context.md     # 活动上下文
+│   ├── tasks_plan.md         # 任务计划
+│   └── rfc/                  # RFC 文档（可选）
+│
+├── src/                      # 源代码
+│   ├── models/               # 数据模型
+│   ├── services/             # 业务逻辑
+│   ├── utils/                # 工具函数
+│   ├── api/                  # API 接口
+│   └── main.py/index.js      # 主入口
+│
+├── tests/                    # 测试代码
+│   ├── unit/                 # 单元测试
+│   ├── integration/          # 集成测试
+│   └── e2e/                  # 端到端测试
+│
+├── config/                   # 配置文件
+│   ├── dev.yaml              # 开发环境配置
+│   ├── prod.yaml             # 生产环境配置
+│   └── test.yaml             # 测试环境配置
+│
+├── utils/                    # 通用工具
+│   ├── scripts/              # 脚本工具
+│   └── helpers/              # 辅助函数
+│
+├── data/                     # 数据文件
+│   ├── raw/                  # 原始数据
+│   ├── processed/            # 处理后数据
+│   └── fixtures/             # 测试数据
+│
+├── .env.example              # 环境变量示例
+├── .gitignore                # Git 忽略文件
+├── README.md                 # 项目说明
+├── requirements.txt          # Python 依赖
+└── package.json              # Node.js 依赖
+```
+
+---
+
+## 目录说明
+
+### .clinerules/ - AI 规则
+包含所有 Cline AI 助手的规则和配置：
+- **ACT/** - 实现和调试规则
+- **PLAN/** - 规划规则
+- **memory.mdc** - 项目记忆系统
+- **error-documentation.mdc** - 错误和解决方案
+- **lessons-learned.mdc** - 经验教训
+
+### docs/ - 文档
+所有项目文档，包括需求、架构、技术规范：
+- **product_requirement_docs.md** - 定义项目目标和需求
+- **architecture.md** - 系统设计和架构
+- **technical.md** - 技术栈和决策
+- **literature/** - 研究和参考资料
+
+### tasks/ - 任务管理
+任务计划和开发上下文：
+- **active_context.md** - 当前工作焦点
+- **tasks_plan.md** - 任务列表和进度
+- **rfc/** - 详细的功能规范
+
+### src/ - 源代码
+应用程序的主要代码：
+- **models/** - 数据模型和实体
+- **services/** - 业务逻辑和服务
+- **utils/** - 项目特定工具
+- **api/** - API 端点和路由
+
+### tests/ - 测试
+所有测试代码：
+- **unit/** - 单元测试
+- **integration/** - 集成测试
+- **e2e/** - 端到端测试
+
+### config/ - 配置
+环境配置文件：
+- **dev.yaml** - 开发配置
+- **prod.yaml** - 生产配置
+- **test.yaml** - 测试配置
+
+### utils/ - 通用工具
+跨项目的通用工具和脚本
+
+### data/ - 数据
+项目数据文件和固件
+
+---
+
+## 特定语言结构
+
+### Python 项目
+```
+project/
+├── src/
+│   ├── __init__.py
+│   ├── models/
+│   │   ├── __init__.py
+│   │   └── user.py
+│   ├── services/
+│   │   ├── __init__.py
+│   │   └── user_service.py
+│   └── utils/
+│       ├── __init__.py
+│       └── helpers.py
+├── tests/
+│   ├── __init__.py
+│   └── test_user_service.py
+├── requirements.txt
+└── setup.py
+```
+
+### Node.js 项目
+```
+project/
+├── src/
+│   ├── models/
+│   │   └── user.js
+│   ├── services/
+│   │   └── userService.js
+│   ├── routes/
+│   │   └── userRoutes.js
+│   └── index.js
+├── tests/
+│   └── userService.test.js
+├── package.json
+└── package-lock.json
+```
+
+### Web 应用
+```
+project/
+├── src/
+│   ├── components/
+│   │   ├── Header.jsx
+│   │   └── Footer.jsx
+│   ├── pages/
+│   │   ├── Home.jsx
+│   │   └── About.jsx
+│   ├── styles/
+│   │   └── main.css
+│   ├── utils/
+│   │   └── helpers.js
+│   └── App.jsx
+├── public/
+│   ├── index.html
+│   └── assets/
+└── package.json
+```
+
+---
+
+## 命名约定
+
+### 文件命名
+- **Python**: `snake_case.py`（user_service.py）
+- **JavaScript**: `camelCase.js`（userService.js）
+- **组件**: `PascalCase.jsx`（UserProfile.jsx）
+- **配置**: `kebab-case.yaml`（app-config.yaml）
+
+### 目录命名
+- 使用小写字母
+- 使用下划线或连字符分隔
+- 保持简短和描述性
+
+---
+
+## 最佳实践
+
+### 1. 模块化
+- 按功能组织代码
+- 保持目录结构扁平
+- 避免深层嵌套（最多 3-4 层）
+
+### 2. 清晰分离
+- 将代码、测试、配置分开
+- 将源代码与构建输出分开
+- 将文档与代码分开
+
+### 3. 一致性
+- 在整个项目中使用相同的命名约定
+- 遵循语言/框架的标准约定
+- 维护清晰的导入/导出结构
+
+### 4. 可扩展性
+- 设计可增长的结构
+- 为新功能留出空间
+- 使用明确的模块边界
+
+---
+
+## 参考
+
+**中文编码规范：**
+- **C:\Dev\rules\ai-instructions\general-rules.md** - 代码组织原则
+- **C:\Dev\rules\ai-instructions\cline-specific.md** - 项目结构约定
+
+**项目模板：**
+- **C:\Dev\templates\** - 各类项目模板
+
+---
+
+**记住：** 良好的目录结构是项目可维护性的基础！

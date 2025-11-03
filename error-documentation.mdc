@@ -1,0 +1,217 @@
+# 错误文档
+
+**记录项目中遇到的错误和解决方案**
+
+---
+
+## 使用说明
+
+当您遇到错误并找到解决方案时，请在此文件中记录：
+1. 错误的完整描述
+2. 错误出现的上下文
+3. 解决方案
+4. 预防措施
+
+这样可以避免将来再次犯同样的错误。
+
+---
+
+## 错误记录模板
+
+```markdown
+### [错误类型] - [简短描述] - [日期]
+
+**错误描述：**
+[详细描述错误是什么]
+
+**错误上下文：**
+- 文件：[受影响的文件]
+- 功能：[相关功能]
+- 触发条件：[什么情况下会出现]
+
+**错误信息：**
+```
+[粘贴完整的错误堆栈/消息]
+```
+
+**根本原因：**
+[解释为什么会发生这个错误]
+
+**解决方案：**
+[详细说明如何修复]
+
+**代码示例：**
+```python
+# 修复前
+[有问题的代码]
+
+# 修复后
+[修复后的代码]
+```
+
+**预防措施：**
+- [如何避免将来出现此问题]
+- [相关的最佳实践]
+
+**相关链接：**
+- [文档链接]
+- [Stack Overflow 链接]
+
+---
+```
+
+## 已记录的错误
+
+### [环境配置] - PowerShell UTF-8 编码乱码 - 2025-11-03
+
+**错误描述：**
+在 Windows PowerShell 中运行 enhance 命令时，emoji 和部分 UTF-8 字符显示为乱码（如 `ðŸ¤–` 而不是 🤖）
+
+**错误上下文：**
+- 文件：enhance.bat, .clinerules/scripts/enhance.py
+- 功能：规则系统增强工具
+- 触发条件：在 Windows PowerShell 5.x 中运行包含 UTF-8 字符的 Python 脚本输出
+- 影响范围：所有使用 emoji 的命令行输出
+
+**错误信息：**
+```
+git commit -m 'ðŸ¤– Auto enhance rules'  # 错误显示
+```
+
+**根本原因：**
+1. Windows PowerShell 5.x 默认使用 GBK (代码页 936) 编码
+2. Python 脚本输出的是 UTF-8 编码的文本
+3. 编码不匹配导致 UTF-8 字节序列被 GBK 错误解释
+4. PowerShell 7 原生支持 UTF-8，但需要正确配置
+
+**解决方案：**
+
+**方案 1：切换到 PowerShell 7（推荐）**
+```powershell
+# PowerShell 7 原生支持 UTF-8，无需额外配置
+# 下载：https://github.com/PowerShell/PowerShell/releases
+```
+
+**方案 2：配置 Windows PowerShell 5.x**
+```powershell
+# 方法 A：运行自动配置脚本
+.\fix-encoding.ps1
+
+# 方法 B：手动添加到 PowerShell Profile
+notepad $PROFILE
+
+# 添加以下内容：
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+$PSDefaultParameterValues['*:Encoding'] = 'utf8'
+chcp 65001 | Out-Null
+```
+
+**代码示例：**
+```python
+# enhance.py 中的输出（UTF-8）
+print("🤖 自动增强规则系统")
+print("✅ 完成")
+print("📊 识别出 0 个错误模式")
+
+# 在未配置的 PowerShell 中显示为：
+# ðŸ¤– 自动增强规则系统
+# â 完成
+# ðŸ"Š 识别出 0 个错误模式
+
+# 配置后正确显示：
+# 🤖 自动增强规则系统
+# ✅ 完成
+# 📊 识别出 0 个错误模式
+```
+
+**预防措施：**
+- 在项目 README 中添加环境配置说明
+- 创建自动检测和配置脚本（fix-encoding.ps1）
+- 推荐使用 PowerShell 7 作为默认终端
+- 在 VS Code 中设置默认终端为 PowerShell 7
+- 提供快速诊断和修复指南
+
+**相关文件：**
+- fix-encoding.ps1 - 自动配置脚本
+- 终端问题解决方案.md - 完整技术文档
+- 解决乱码-快速指南.md - 快速参考
+
+**技术背景：**
+```
+字符 | UTF-8 字节序列 | GBK 错误解释
+-----|---------------|-------------
+🤖   | F0 9F A4 96   | ðŸ¤–
+✅   | E2 9C 85      | â
+📊   | F0 9F 93 8A   | ðŸ"Š
+```
+
+**影响范围：**
+- 频率：每次在 Windows PowerShell 5.x 中运行 enhance 命令
+- 严重性：中等（不影响功能，但影响用户体验）
+- 用户群：使用 Windows PowerShell 5.x 的所有用户
+
+---
+
+### 示例：导入错误 - 模块未找到 - 2025-11-03
+
+**错误描述：**
+在运行应用时出现 ModuleNotFoundError
+
+**错误上下文：**
+- 文件：src/main.py
+- 功能：应用启动
+- 触发条件：运行 python src/main.py
+
+**错误信息：**
+```
+ModuleNotFoundError: No module named 'config'
+```
+
+**根本原因：**
+Python 路径配置不正确，无法找到自定义模块
+
+**解决方案：**
+在 src 目录中添加 __init__.py 文件，或更新 PYTHONPATH
+
+**代码示例：**
+```python
+# 修复前
+import config  # 错误：找不到模块
+
+# 修复后
+from src import config  # 或
+import sys
+sys.path.append('src')
+import config
+```
+
+**预防措施：**
+- 始终在 Python 包目录中包含 __init__.py
+- 使用相对导入或绝对导入
+- 在项目根目录设置正确的 PYTHONPATH
+
+---
+
+## 错误分类
+
+### 环境配置错误
+[环境相关的错误和解决方案]
+
+### 依赖问题
+[包和依赖相关的错误]
+
+### 数据库错误
+[数据库连接和查询错误]
+
+### API 集成错误
+[第三方 API 集成问题]
+
+### 性能问题
+[性能瓶颈和优化]
+
+### 安全问题
+[安全漏洞和修复]
+
+---
+
+**注意：** 定期审查和更新此文档，确保信息准确和有用！

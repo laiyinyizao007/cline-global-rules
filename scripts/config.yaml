@@ -1,0 +1,15 @@
+# .clinerules 增强脚本配置
+# 极简配置 - 适合间歇性使用
+
+analysis:
+  min_frequency: 3          # 最小出现次数（错误至少出现3次才被认为是模式）
+  min_confidence: 0.7       # 最小置信度（只有高置信度的模式才生成规则）
+
+auto_append:
+  enabled: true            # 启用自动追加
+  add_timestamp: true      # 添加时间戳
+
+# 可选：高级配置
+advanced:
+  backup_before_append: false    # 不需要备份（Git已经提供版本控制）
+  max_suggestions: 5             # 最多生成5条建议
