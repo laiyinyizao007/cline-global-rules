@@ -100,6 +100,7 @@ git push
 
 ## 📖 文档
 
+- **📋 命令手册**: `docs/COMMANDS.md` - Darwin命令速查（⭐ 推荐）
 - **核心规则**: `core/darwin-guide.mdc` - Darwin使用指南
 - **架构设计**: 查看rules_template项目的docs/darwin-architecture.md
 - **实施指南**: 查看rules_template项目的docs/darwin-implementation-guide.md
