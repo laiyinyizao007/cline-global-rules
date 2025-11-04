@@ -1,0 +1,218 @@
+# Darwin系统使用指南
+
+**这是公用规则的一部分，所有使用Darwin系统的项目都会加载此规则**
+
+---
+
+## 🎯 Darwin系统概述
+
+Darwin系统采用混合存储架构：
+- **公用规则**：存储在 C:\Dev\global-config\darwinRules（GitHub同步）
+- **项目规则**：存储在项目的 .clinerules/project-specific/
+- **规则合并**：通过 .darwin-link 配置文件控制
+
+---
+
+## 📚 规则加载顺序
+
+AI助手将按以下顺序加载规则：
+
+1. 读取项目的 `.darwin-link` 配置
+2. 加载 `C:\Dev\global-config\darwinRules/core/` 中的公用规则：
+   - darwin-guide.mdc（本文件）
+   - ACT/*.mdc（实现和调试规则）
+   - PLAN/*.mdc（规划规则）
+   - rules.mdc（编码规范）
+   - mcp-tools.mdc（MCP工具指南）
+   - directory-structure.mdc（目录结构规范）
+3. 加载项目的 `.clinerules/project-specific/` 中的项目规则
+4. 根据优先级合并（默认：项目规则优先）
+
+---
+
+## 🔀 项目规则 vs 公用规则
+
+### 何时使用项目规则（project-specific/）
+
+✅ **应该放在项目规则中：**
+- 项目特定的命名约定
+- 特殊的业务逻辑规则
+- 项目独有的工作流程
+- 团队成员信息
+- 项目特定的技术栈约定
+- 错误日志（error-logs.mdc）
+- 经验教训（lessons-learned.mdc）
+
+❌ **不应该放在项目规则中：**
+- 通用的编码规范（应该在公用规则中）
+- 通用的最佳实践（应该在公用规则中）
+- 可以被其他项目复用的规则
+
+### 何时贡献到公用规则
+
+如果你发现某个规则：
+- ✅ 可以被多个项目使用
+- ✅ 是通用的最佳实践
+- ✅ 能提升代码质量
+
+**请考虑贡献到darwinRules公用规则库！**
+
+---
+
+## 🔄 更新公用规则
+
+### 获取最新规则
+
+```powershell
+cd C:\Dev\global-config\darwinRules
+pwsh scripts\sync\sync-to-local.ps1
+# 或直接使用git
+git pull origin main
+```
+
+所有使用Darwin系统的项目将自动使用最新规则（下次加载时）
+
+### 贡献规则改进
+
+```powershell
+cd C:\Dev\global-config\darwinRules
+# 修改规则文件
+code core\rules.mdc
+
+# 提交并推送
+git add .
+git commit -m "Improve: 改进说明"
+git push origin main
+
+# 或使用脚本
+pwsh scripts\sync\sync-to-github.ps1 -Message "Improve: 改进说明"
+```
+
+---
+
+## 📊 版本管理
+
+### 锁定规则版本（生产环境推荐）
+
+在 `.darwin-link` 中设置：
+
+```json
+{
+  "darwinRules": {
+    "version": "2.1.0",
+    "lockVersion": true
+  }
+}
+```
+
+### 使用最新版本（开发环境）
+
+```json
+{
+  "darwinRules": {
+    "lockVersion": false
+  }
+}
+```
+
+---
+
+## ⚖️ 规则优先级
+
+### 配置优先级
+
+在 `.darwin-link` 中设置：
+
+```json
+{
+  "rules": {
+    "overrides": {
+      "priority": "project-first"  // 或 "darwin-first"
+    }
+  }
+}
+```
+
+- **project-first**：项目规则优先（默认，推荐）
+- **darwin-first**：公用规则优先（强制规范）
+
+**示例：**
+```
+公用规则: 函数最多3个参数
+项目规则: 函数最多5个参数
+
+priority = "project-first" → 使用5个参数
+priority = "darwin-first" → 使用3个参数
+```
+
+---
+
+## 🚀 常见工作流程
+
+### 创建新项目
+
+```powershell
+pwsh C:\Dev\global-config\darwinRules\scripts\project\init-project.ps1 -ProjectName "my-project"
+```
+
+### 添加项目特定规则
+
+```powershell
+cd my-project
+code .clinerules\project-specific\custom-rules.mdc
+```
+
+### 更新所有项目的公用规则
+
+```powershell
+cd C:\Dev\global-config\darwinRules
+git pull
+# 完成！所有项目下次加载时使用新规则
+```
+
+---
+
+## 🔧 故障排查
+
+### 问题：规则没有更新
+
+```powershell
+# 1. 检查本地darwinRules是否是最新的
+cd C:\Dev\global-config\darwinRules
+git status
+git pull
+
+# 2. 检查项目的.darwin-link配置
+cat .clinerules\.darwin-link
+
+# 3. 重启Cline或重新加载规则
+```
+
+### 问题：规则冲突
+
+检查 `.darwin-link` 中的优先级设置，调整 `priority` 参数。
+
+### 问题：找不到公用规则
+
+确认 `C:\Dev\global-config\darwinRules\` 目录存在并已从GitHub克隆。
+
+---
+
+## 💡 最佳实践
+
+### ✅ 推荐做法
+1. **定期更新公用规则** - 每周拉取一次
+2. **项目规则最小化** - 只添加真正项目特定的规则
+3. **改进共享出来** - 通用改进贡献给darwinRules
+4. **版本锁定生产项目** - 稳定性优先
+5. **使用分支开发** - 重大规则变更先在分支测试
+
+### ❌ 避免做法
+1. **不要完全覆盖公用规则** - 失去共享的意义
+2. **不要长期不更新** - 错过改进和修复
+3. **不要直接修改darwinRules文件夹** - 使用Git管理
+4. **不要破坏性变更** - 保持向后兼容
+
+---
+
+**记住：公用规则是团队的共享知识库，好的改进应该贡献回来！** 🌟

@@ -1,0 +1,378 @@
+# .clinerules 快速入门指南
+
+**欢迎使用 Cline AI 辅助开发规则系统！**
+
+这是一个完整的 AI 协作开发框架，包含工作流程、编码规范、MCP 工具指南和知识管理系统。
+
+---
+
+## 🚀 5分钟快速上手
+
+### 第一次使用？按这个顺序阅读：
+
+1. **📖 本文件**（你正在读的）- 了解系统概览
+2. **🎯 data/memory-data.mdc** - 理解记忆库系统架构
+3. **📝 PLAN/plan.mdc** - 学习规划模式
+4. **💻 ACT/implement.mdc** - 学习实现模式
+5. **📋 rules.mdc** - 查阅编码规范和 MCP 工具
+
+---
+
+## 📋 快速导航索引
+
+### 核心文档
+- **[快速入门](README.mdc)** - 系统概览和使用指南
+- **[编码规范](rules.mdc)** - 完整的编码规范和最佳实践
+- **[MCP工具指南](mcp-tools.mdc)** - MCP工具详细使用指南
+- **[记忆系统](data/memory-data.mdc)** - 知识管理和上下文记忆
+
+### 工作模式
+- **[PLAN模式](PLAN/plan.mdc)** - 规划任务时的规则和流程
+- **[ACT模式](ACT/)** - 执行任务时的规则
+  - [实现规则](ACT/implement.mdc)
+  - [调试规则](ACT/debug.mdc)
+
+### 项目管理
+- **[目录结构](directory-structure.mdc)** - 项目组织规范
+- **[错误文档](data/error-logs.mdc)** - 常见错误和解决方案
+- **[经验教训](data/lessons-learned.mdc)** - 项目经验总结
+
+### 工具与脚本
+- **[增强脚本](scripts/enhance.py)** - 自动化分析和增强工具
+- **[GitHub自动化](docs/github-automation.mdc)** - 云端自动更新规则系统
+
+## 🎯 使用指南
+
+### 根据任务类型选择规则
+- **新项目开发** → 编码规范与工具指南（核心原则 + 命名规范 + 函数设计）
+- **代码重构** → 编码规范与工具指南（SOLID原则 + 函数设计 + 错误处理）
+- **调试问题** → 错误文档 + ACT/debug.mdc
+- **架构设计** → PLAN模式 + 目录结构
+- **工具使用** → 编码规范与工具指南（MCP工具部分）
+
+### 性能优化
+- 优先加载相关规则，避免加载整个rules集合
+- 使用索引快速定位所需规范
+- 定期review和更新rules内容
+
+## 📚 核心概念
+
+### 🔄 两种工作模式
+
+**PLAN 模式（规划）**
+- 用于：架构设计、方案选择、需求分析
+- 流程：理解需求 → 制定方案 → 验证方案 → 记录文档
+- 文件：PLAN/plan.mdc
+
+**ACT 模式（实现）**
+- 用于：代码编写、功能实现、问题调试
+- 流程：分析代码 → 计划更改 → 实施更改 → 测试验证
+- 文件：ACT/implement.mdc, ACT/debug.mdc
+
+### 🧠 混合存储架构
+
+**本地静态文件（rules.mdc）**
+- 编码规范和最佳实践
+- MCP 工具使用指南
+- 长期稳定的规则系统
+
+**GitHub 动态数据（.clinerules/data/）**
+- `error-logs.mdc` - 错误记录和解决方案
+- `lessons-learned.mdc` - 经验教训和改进建议
+- `memory-data.mdc` - 系统统计和健康度分析
+
+**项目级文件（docs/ 和 tasks/）**
+- `docs/product_requirement_docs.md` - 产品需求
+- `docs/architecture.md` - 系统架构
+- `docs/technical.md` - 技术规范
+- `tasks/tasks_plan.md` - 任务计划
+- `tasks/active_context.md` - 当前上下文
+
+## 📚 外部资源
+- [中文编码规范](../rules/ai-instructions/general-rules.md)
+- [Cline特定规则](../rules/ai-instructions/cline-specific.md)
+- [项目模板](../../templates/)
+
+---
+
+**提示：** 选择性加载rules可以显著提升响应速度和准确性！
+
+---
+
+## 🔍 快速查找指南
+
+### 我想查找...
+
+**编码规范**
+- 📋 通用规则 → `rules.mdc`（核心原则部分）
+- 📁 项目结构 → `directory-structure.mdc`
+- 🎯 SOLID 原则 → `rules.mdc`（SOLID 原则部分）
+
+**MCP 工具使用**
+- 📖 完整指南 → `mcp-tools.mdc`
+- 🗂️ 文件操作 → `mcp-tools.mdc`（Filesystem MCP 部分）
+- 🧠 知识图谱 → `mcp-tools.mdc`（Memory MCP 部分）
+- 🐙 GitHub 操作 → `mcp-tools.mdc`（GitHub MCP 部分）
+- 🔧 Git 版本控制 → `mcp-tools.mdc`（Git MCP 部分）
+- 📖 文档查询 → `mcp-tools.mdc`（Context7 MCP 部分）
+- 🌐 浏览器测试 → `mcp-tools.mdc`（Puppeteer MCP 部分）
+- 🧩 复杂问题解决 → `mcp-tools.mdc`（Sequential Thinking MCP 部分）
+
+**工作流程**
+- 📐 规划任务 → `PLAN/plan.mdc`
+- 💻 实现功能 → `ACT/implement.mdc`
+- 🐛 调试问题 → `ACT/debug.mdc`
+
+**知识管理**
+- 📝 记录错误 → `data/error-logs.mdc`
+- 💡 记录经验 → `data/lessons-learned.mdc`
+- 🎯 系统架构 → `data/memory-data.mdc`
+
+---
+
+## 🛠️ 常用操作
+
+### 开始新项目
+```bash
+1. 创建核心文件（docs/ 和 tasks/ 目录）
+2. 填写 PRD 定义项目
+3. 设计架构和技术栈
+4. 创建初始任务计划
+```
+
+### 日常开发
+```bash
+1. 规划时 → 读取所有核心文件，使用 PLAN 模式
+2. 实现时 → 读取相关文档，使用 ACT 模式
+3. 调试时 → 查阅错误文档和经验教训
+4. 定期 → 更新活动上下文和任务计划
+```
+
+### 运行自动化工具
+```bash
+# 运行规则系统增强分析
+python .clinerules/scripts/enhance.py
+
+# 或使用便捷命令（如果已配置）
+enhance
+```
+
+**enhance.py 功能：**
+- 🔍 分析错误模式
+- 💡 生成改进建议
+- 🔧 环境检测（PowerShell 版本、编码）
+- 📊 系统健康度统计
+
+---
+
+## 📖 MCP 工具速查
+
+### 🎯 工具选择决策树
+
+```
+任务类型 → 首选 MCP 工具
+├─ 文件操作 → Filesystem MCP
+├─ 知识管理 → Memory MCP
+├─ 代码仓库 → GitHub MCP
+├─ 版本控制 → Git MCP
+├─ 文档查询 → Context7 MCP
+├─ 浏览器测试 → Puppeteer MCP
+└─ 复杂问题 → Sequential Thinking MCP
+```
+
+### 🔧 最常用的 MCP 操作
+
+**Filesystem MCP**
+```python
+# 批量读取文件
+read_multiple_files(["file1.py", "file2.py"])
+
+# 浏览目录树
+directory_tree("src/")
+```
+
+**Memory MCP**
+```python
+# 创建知识实体
+create_entities([{
+  "name": "功能名称",
+  "entityType": "module",
+  "observations": ["观察1", "观察2"]
+}])
+
+# 搜索知识
+search_nodes("搜索关键词")
+```
+
+**Git MCP**
+```python
+# 提交代码
+git_add(files=["."])
+git_commit(message="feat: 新功能")
+git_push(branch="main")
+```
+
+**详细用法** → 参见 `mcp-tools.mdc`
+
+---
+
+## 💡 最佳实践
+
+### ✅ 推荐做法
+
+1. **工作前** - 阅读 data/memory-data.mdc 和相关文档
+2. **规划时** - 使用 PLAN 模式，详细思考
+3. **实现时** - 使用 ACT 模式，系统化编码
+4. **记录问题** - 直接在GitHub上更新 data/ 目录下的文件
+5. **获取建议** - 运行 enhance.py 获取AI分析和改进建议
+
+### ❌ 常见错误
+
+1. ❌ 跳过规划直接实现
+2. ❌ 不记录错误和经验
+3. ❌ 不使用 MCP 工具
+4. ❌ 不更新文档
+5. ❌ 不运行自动化分析
+
+---
+
+## 🎓 学习路径
+
+### 入门级（1-2天）
+1. ✅ 阅读本 README
+2. ✅ 理解混合存储架构（本地静态 + GitHub动态）
+3. ✅ 学习 PLAN 和 ACT 工作流
+4. ✅ 练习使用 2-3 个 MCP 工具
+
+### 进阶级（1周）
+5. ✅ 掌握所有 7 个 MCP 工具
+6. ✅ 理解 enhance.py 的工作原理
+7. ✅ 建立GitHub数据维护习惯
+8. ✅ 能够自定义规则和流程
+
+### 高级级（持续）
+9. ✅ 扩展 MCP 服务器
+10. ✅ 优化 enhance.py
+11. ✅ 贡献改进建议
+12. ✅ 分享最佳实践
+
+---
+
+## 📊 系统文件索引
+
+### 📁 完整文件列表
+
+```
+.clinerules/
+├── README.mdc                  # 📖 本文件
+├── rules.mdc                   # 📋 编码规范 + MCP 工具指南
+├── directory-structure.mdc     # 📁 项目目录结构
+├── mcp-tools.mdc               # 🔧 MCP 工具详细指南
+│
+├── data/                       # 📊 动态数据存储
+│   ├── memory-data.mdc         # 🧠 记忆库系统架构
+│   ├── error-logs.mdc          # 📝 错误知识库
+│   └── lessons-learned.mdc     # 💡 经验教训
+│
+├── PLAN/
+│   └── plan.mdc               # 📐 规划模式工作流
+│
+├── ACT/
+│   ├── implement.mdc          # 💻 实现模式工作流
+│   └── debug.mdc              # 🐛 调试模式工作流
+│
+├── scripts/
+│   ├── enhance.py             # 🤖 自动分析和增强
+│   └── config.yaml            # ⚙️ 配置文件
+│
+└── docs/
+    └── github-automation.mdc  # 🚀 GitHub 自动化文档
+```
+
+---
+
+## 🆘 常见问题
+
+### Q: 我应该从哪个文件开始阅读？
+**A:** 按顺序：README.mdc → data/memory-data.mdc → PLAN/plan.mdc → ACT/implement.mdc
+
+### Q: 什么时候使用 PLAN 模式？什么时候使用 ACT 模式？
+**A:** 
+- **PLAN** - 需要思考、设计、选择方案时
+- **ACT** - 已经有明确方案，需要实现时
+
+### Q: MCP 工具太多了，记不住怎么办？
+**A:** 
+1. 常用的只有 3-4 个（Filesystem、Memory、Git）
+2. 使用时查阅 rules.mdc
+3. 遵循"MCP 优先原则"
+
+### Q: enhance.py 多久运行一次？
+**A:** 
+- 建议：每完成一个功能后运行
+- 或每天结束时运行
+- 或当积累了 3+ 个错误记录后运行
+
+### Q: 如何记录错误？
+**A:** 在 data/error-logs.mdc 中按模板记录：
+```markdown
+### [错误类型] - [简短描述] - [日期]
+**错误描述：** ...
+**解决方案：** ...
+**预防措施：** ...
+```
+
+### Q: 如何扩展 MCP 工具？
+**A:** 参考 rules.mdc 的"MCP 扩展策略"部分：
+1. 搜索 GitHub 上的 MCP 服务器
+2. 评估质量
+3. 安装配置
+4. 更新文档
+
+---
+
+## 🔗 相关资源
+
+### 中文编码规范
+- `C:\Dev\rules\ai-instructions\general-rules.md`
+- `C:\Dev\rules\ai-instructions\cline-specific.md`
+
+### 项目模板
+- `C:\Dev\templates\`
+
+### MCP 官方文档
+- Model Context Protocol: https://modelcontextprotocol.io
+- Awesome MCP Servers: https://github.com/punkpeye/awesome-mcp-servers
+
+---
+
+## 🎯 下一步建议
+
+### 立即行动
+1. ✅ 阅读 data/memory-data.mdc 了解系统架构
+2. ✅ 根据项目需要创建核心文件
+3. ✅ 开始使用 PLAN/ACT 工作流
+
+### 本周内
+4. ✅ 学习并使用 3 个 MCP 工具
+5. ✅ 记录第一个错误和经验
+6. ✅ 运行 enhance.py 分析或启用 GitHub 自动化
+
+### 持续改进
+7. ✅ 定期更新文档
+8. ✅ 积累知识库
+9. ✅ 优化规则系统
+10. ✅ 设置 GitHub Actions 自动更新（可选）
+
+---
+
+## 📞 需要帮助？
+
+- 📖 查阅具体文件的详细说明
+- 💬 提出问题和建议
+- 🔧 报告 bug 或问题
+- 💡 分享您的最佳实践
+
+---
+
+**祝您使用愉快！让 AI 成为您最强大的开发伙伴！** 🚀

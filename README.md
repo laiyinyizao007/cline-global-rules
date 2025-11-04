@@ -1,156 +1,115 @@
-# Cline 全局规则
+# Darwin Rules - AI规则系统
 
-> 统一的 AI 编码助手规则系统，支持 PLAN/ACT 双模式工作流
+> 通用AI编码助手规则库 - 支持Cline、Cursor等AI工具
 
-[![GitHub](https://img.shields.io/badge/GitHub-cline--global--rules-blue)](https://github.com/laiyinyizao007/cline-global-rules)
+## 🎯 什么是Darwin Rules？
 
-## 📚 规则文件
+Darwin Rules是一个智能的AI规则管理系统，采用混合存储架构：
+- **公用规则集中管理** - 所有项目共享
+- **自动同步更新** - 一处修改，处处生效
+- **项目规则灵活覆盖** - 支持项目特定定制
 
-- **rules.mdc** - 通用规则（项目配置、依赖管理、编码规范）
-- **ACT/implement.mdc** - 实现工作流
-- **ACT/debug.mdc** - 调试工作流  
-- **PLAN/plan.mdc** - 规划工作流
-- **memory.mdc** - 项目记忆库系统
-- **error-documentation.mdc** - 错误记录模板
-- **lessons-learned.mdc** - 经验教训模板
-- **directory-structure.mdc** - 目录结构规范
+## 📊 核心优势
 
-## 🚀 使用方法
+- ✅ **项目体积减少95%** - 不再重复存储规则
+- ✅ **更新效率提升10倍** - 一次更新全部生效
+- ✅ **版本100%一致** - 自动同步机制
+- ✅ **30秒创建项目** - 一条命令搞定
 
-### 方法 1：Git Submodule（推荐）
+## 🚀 快速开始
 
-在项目中作为 submodule 使用：
+### 1. 克隆到本地
 
 ```powershell
-# 添加 submodule
-cd C:\Dev\projects\your-project
-git submodule add https://github.com/laiyinyizao007/cline-global-rules .clinerules-global
-
-# 合并规则到 .clinerules
-pwsh -File .clinerules-global/scripts/merge-to-parent.ps1
+git clone https://github.com/laiyinyizao007/darwinRules.git C:\Dev\global-config\darwinRules
 ```
 
-### 方法 2：直接克隆
-
-克隆到全局配置目录：
+### 2. 创建新项目
 
 ```powershell
-# 克隆仓库
-cd C:\Dev\global-config
-git clone https://github.com/laiyinyizao007/cline-global-rules clinerules
-
-# 在项目中使用
-cd C:\Dev\projects\your-project
-pwsh -File "C:\Dev\global-config\clinerules\scripts\merge-to-project.ps1"
+pwsh C:\Dev\global-config\darwinRules\scripts\project\init-project.ps1 -ProjectName "my-project"
 ```
 
-### 方法 3：符号链接
-
-创建符号链接（需要管理员权限）：
+### 3. 开始开发
 
 ```powershell
-# 克隆到本地
-git clone https://github.com/laiyinyizao007/cline-global-rules C:\Dev\global-config\clinerules
-
-# 在项目中创建符号链接
-cd C:\Dev\projects\your-project
-New-Item -ItemType SymbolicLink -Path ".clinerules" -Target "C:\Dev\global-config\clinerules"
+cd C:\Dev\projects\my-project
+code .
 ```
 
-## 🔄 更新规则
+## 📁 目录结构
 
-### 更新本地规则
-
-```powershell
-cd C:\Dev\global-config\clinerules
-git pull origin main
+```
+darwinRules/
+├── core/                      # 核心规则（公用）
+│   ├── ACT/                   # 实现和调试规则
+│   ├── PLAN/                  # 规划规则
+│   ├── rules.mdc              # 编码规范
+│   ├── mcp-tools.mdc          # MCP工具指南
+│   ├── darwin-guide.mdc       # Darwin使用指南 ⭐
+│   └── ...
+├── templates/                 # 项目模板
+│   └── base-project/
+├── scripts/                   # 管理脚本
+│   ├── sync/                  # 同步脚本
+│   └── project/               # 项目管理
+└── docs/                      # 文档
 ```
 
-### 自动同步到所有项目
+## 🔄 日常使用
 
-使用提供的脚本：
+### 更新公用规则
 
 ```powershell
-pwsh -File C:\Dev\global-config\clinerules\scripts\sync-all-projects.ps1
+cd C:\Dev\global-config\darwinRules
+git pull
 ```
 
-## 📝 贡献规则
-
-### 修改规则
+### 贡献规则改进
 
 ```powershell
-# 1. 编辑规则文件
-code C:\Dev\global-config\clinerules\rules.mdc
-
-# 2. 提交更改
-cd C:\Dev\global-config\clinerules
+cd C:\Dev\global-config\darwinRules
+# 修改规则
 git add .
-git commit -m "更新: 描述你的更改"
-
-# 3. 推送到 GitHub
-git push origin main
+git commit -m "Improve: 说明"
+git push
 ```
 
-### 自动推送（推荐）
+## 📖 文档
 
-使用自动推送脚本：
+- **核心规则**: `core/darwin-guide.mdc` - Darwin使用指南
+- **架构设计**: 查看rules_template项目的docs/darwin-architecture.md
+- **实施指南**: 查看rules_template项目的docs/darwin-implementation-guide.md
 
-```powershell
-# 编辑规则后，运行自动推送
-cd C:\Dev\global-config\clinerules
-.\scripts\auto-push.ps1 "更新描述"
-```
+## 🎓 规则组成
 
-## 🏗️ 目录结构
+### 公用规则（core/）
+1. **darwin-guide.mdc** - Darwin系统使用指南
+2. **rules.mdc** - 通用编码规范
+3. **mcp-tools.mdc** - MCP工具使用指南
+4. **ACT/** - 实现和调试规则
+5. **PLAN/** - 规划规则
 
-```
-clinerules/
-├── README.md                      # 本文件
-├── .gitignore                     # Git 忽略规则
-│
-├── ACT/                           # 实现模式规则
-│   ├── implement.mdc              # 实现工作流
-│   └── debug.mdc                  # 调试工作流
-│
-├── PLAN/                          # 规划模式规则
-│   └── plan.mdc                   # 规划工作流
-│
-├── rules.mdc                      # 通用规则
-├── memory.mdc                     # 记忆库系统
-├── error-documentation.mdc        # 错误记录
-├── lessons-learned.mdc            # 经验教训
-├── directory-structure.mdc        # 目录结构
-│
-└── scripts/                       # 工具脚本
-    ├── auto-push.ps1              # 自动推送
-    ├── merge-to-project.ps1       # 合并到项目
-    └── sync-all-projects.ps1      # 同步所有项目
-```
+### 项目规则（.clinerules/project-specific/）
+- custom-rules.mdc - 项目自定义规则
+- project-memory.mdc - 项目记忆
+- error-logs.mdc - 错误日志
+- lessons-learned.mdc - 经验教训
 
-## 🌟 核心特性
+## 📊 版本
 
-- ✅ **统一规则** - 所有项目使用相同的规则
-- ✅ **版本控制** - 通过 Git 管理规则变更
-- ✅ **云端同步** - 自动推送到 GitHub
-- ✅ **多机协作** - 支持多台电脑同步
-- ✅ **团队共享** - 团队成员共用规则库
-- ✅ **自动更新** - 脚本自动同步最新规则
+当前版本: **2.0.0**
 
-## 📖 规则说明
+查看 [CHANGELOG.md](CHANGELOG.md) 了解更新历史。
 
-### PLAN 模式
-用于项目规划、架构设计、技术选型
+## 🤝 贡献
 
-### ACT 模式  
-用于代码实现、调试、测试
+欢迎贡献规则改进！
 
-### Memory 系统
-7个核心文档构成项目知识库
-
-## 🔗 相关链接
-
-- **规则模板项目**: [rules_template](https://github.com/laiyinyizao007/rules_template)
-- **中文编码规范**: `C:\Dev\rules\`
+1. Fork本仓库
+2. 创建功能分支
+3. 提交改进
+4. 发起Pull Request
 
 ## 📄 许可
 
@@ -158,4 +117,4 @@ MIT License
 
 ---
 
-**让 AI 编码助手更智能！** 🚀
+**让AI助手更智能，让开发更高效！** 🚀

@@ -1,0 +1,1051 @@
+# MCP 工具充分利用指南
+
+## 📑 快速导航
+
+### MCP 工具列表
+- [🎯 MCP 工具优先级原则](#-mcp-工具优先级原则)
+- [📚 Memory MCP - 知识图谱管理](#-memory-mcp---知识图谱管理)
+- [📁 Filesystem MCP - 高效文件操作](#-filesystem-mcp---高效文件操作)
+- [🐙 GitHub MCP - 代码仓库集成](#-github-mcp---代码仓库集成)
+- [🔧 Git MCP - 版本控制精确操作](#-git-mcp---版本控制精确操作)
+- [📖 Context7 MCP - 智能文档查询](#-context7-mcp---智能文档查询)
+- [🌐 Puppeteer MCP - 浏览器自动化](#-puppeteer-mcp---浏览器自动化)
+- [🧠 Sequential Thinking MCP - 智能问题解决](#-sequential-thinking-mcp---智能问题解决)
+
+### 使用指南
+- [🔄 MCP 工具组合模式](#-mcp-工具组合模式)
+- [🎯 MCP 工具使用检查清单](#-mcp-工具使用检查清单)
+- [🚀 MCP 工具使用的黄金规则](#-mcp-工具使用的黄金规则)
+- [🔍 问题解决与 MCP 扩展策略](#-问题解决与-mcp-扩展策略)
+
+---
+
+## 🎯 MCP 工具优先级原则
+
+**始终优先考虑使用 MCP 工具，而不是传统方法！**
+
+### 工具选择决策树
+
+```
+任务类型 → 首选 MCP 工具 → 备选方案
+├─ 文件操作 → Filesystem MCP → read_file/write_to_file
+├─ 知识管理 → Memory MCP → 内存文件
+├─ 代码仓库 → GitHub MCP → Git MCP
+├─ 版本控制 → Git MCP → execute_command
+├─ 文档查询 → Context7 MCP → web_fetch
+├─ 浏览器测试 → Puppeteer MCP → browser_action
+└─ 复杂问题解决 → Sequential Thinking MCP → 手动规划
+```
+
+---
+
+## 📚 Memory MCP - 知识图谱管理
+
+### 何时使用 Memory MCP
+
+**必须使用的场景：**
+1. ✅ 记录项目关键概念和实体
+2. ✅ 建立代码模块间的依赖关系
+3. ✅ 保存用户偏好和项目决策
+4. ✅ 跟踪架构演变和技术选型
+5. ✅ 存储重要的上下文信息
+
+**不要使用的场景：**
+- ❌ 临时变量和短期状态
+- ❌ 详细的代码实现（使用文档）
+- ❌ 大量的日志数据
+
+### 实体设计最佳实践
+
+```typescript
+// ✅ 好的实体设计
+{
+  "name": "UserAuthenticationModule",
+  "entityType": "module",
+  "observations": [
+    "使用 JWT 进行身份验证",
+    "支持 OAuth2.0 社交登录",
+    "密码使用 bcrypt 加密",
+    "会话超时时间为 30 分钟"
+  ]
+}
+
+// ❌ 不好的实体设计
+{
+  "name": "stuff",  // 名称不清晰
+  "entityType": "thing",  // 类型太泛化
+  "observations": [
+    "有一些代码"  // 观察太模糊
+  ]
+}
+```
+
+### 关系设计最佳实践
+
+```typescript
+// ✅ 使用主动语态，清晰的关系类型
+{
+  "from": "UserService",
+  "to": "DatabaseConnection",
+  "relationType": "depends_on"
+}
+
+{
+  "from": "AuthenticationModule",
+  "to": "UserService",
+  "relationType": "implements"
+}
+
+// ❌ 避免被动语态或模糊关系
+{
+  "from": "UserService",
+  "to": "DatabaseConnection",
+  "relationType": "related_to"  // 太模糊
+}
+```
+
+### 观察记录最佳实践
+
+```typescript
+// ✅ 离散、原子、具体的观察
+{
+  "entityName": "PaymentService",
+  "observations": [
+    "集成了 Stripe API v3",
+    "支持信用卡和支付宝",
+    "每笔交易收取 2.9% + $0.30 手续费",
+    "自动重试失败的支付最多 3 次"
+  ]
+}
+
+// ❌ 避免长篇大论或重复信息
+{
+  "entityName": "PaymentService",
+  "observations": [
+    "这个服务处理所有的支付相关功能，包括..."  // 太长
+  ]
+}
+```
+
+### Memory MCP 工作流程
+
+```
+项目开始
+  ↓
+创建核心实体（项目、模块、概念）
+  ↓
+建立关系（依赖、继承、关联）
+  ↓
+持续添加观察（决策、模式、经验）
+  ↓
+定期搜索和查询（search_nodes, open_nodes）
+  ↓
+更新和优化知识图谱
+```
+
+### Memory MCP 命令速查
+
+```python
+# 创建实体
+create_entities([
+  {
+    "name": "实体名称",
+    "entityType": "类型",
+    "observations": ["观察1", "观察2"]
+  }
+])
+
+# 创建关系
+create_relations([
+  {
+    "from": "源实体",
+    "to": "目标实体",
+    "relationType": "关系类型"
+  }
+])
+
+# 添加观察
+add_observations([
+  {
+    "entityName": "实体名称",
+    "contents": ["新观察1", "新观察2"]
+  }
+])
+
+# 搜索节点
+search_nodes("搜索关键词")
+
+# 打开特定节点
+open_nodes(["实体名称1", "实体名称2"])
+
+# 读取整个图谱
+read_graph()
+```
+
+---
+
+## 📁 Filesystem MCP - 高效文件操作
+
+### 何时使用 Filesystem MCP
+
+**优先使用场景：**
+1. ✅ 读取多个文件（read_multiple_files）
+2. ✅ 批量文件操作
+3. ✅ 目录树浏览（directory_tree）
+4. ✅ 文件搜索（search_files）
+5. ✅ 获取文件元数据（get_file_info）
+
+### Filesystem MCP vs 传统工具
+
+```python
+# ✅ 使用 Filesystem MCP 读取多个文件
+read_multiple_files([
+  "src/main.py",
+  "src/config.py",
+  "src/utils.py"
+])
+# 优点：一次调用，批量处理，更高效
+
+# ❌ 不要逐个调用 read_file
+read_file("src/main.py")
+read_file("src/config.py")
+read_file("src/utils.py")
+# 缺点：多次调用，效率低
+```
+
+### 目录结构分析
+
+```python
+# ✅ 使用 directory_tree 获取 JSON 格式的目录树
+directory_tree("src/")
+# 返回结构化的 JSON，易于分析
+
+# ✅ 使用 list_directory_with_sizes 查看文件大小
+list_directory_with_sizes("src/", sortBy="size")
+# 按大小排序，找出大文件
+
+# ✅ 使用 search_files 查找特定文件
+search_files("src/", "*.test.py", excludePatterns=["__pycache__"])
+```
+
+---
+
+## 🐙 GitHub MCP - 代码仓库集成
+
+### 何时使用 GitHub MCP
+
+**必须使用的场景：**
+1. ✅ 创建和管理 Pull Request
+2. ✅ 创建和更新 Issue
+3. ✅ 搜索代码和仓库
+4. ✅ Fork 和分支管理
+5. ✅ 批量推送文件（push_files）
+
+### GitHub 工作流最佳实践
+
+```python
+# ✅ 完整的 PR 工作流
+# 1. 创建分支
+create_branch(owner="user", repo="repo", branch="feature/new-feature")
+
+# 2. 批量推送文件
+push_files(
+  owner="user",
+  repo="repo",
+  branch="feature/new-feature",
+  files=[
+    {"path": "src/new_feature.py", "content": "..."},
+    {"path": "tests/test_new_feature.py", "content": "..."}
+  ],
+  message="feat: add new feature"
+)
+
+# 3. 创建 PR
+create_pull_request(
+  owner="user",
+  repo="repo",
+  title="feat: add new feature",
+  head="feature/new-feature",
+  base="main",
+  body="## 变更说明\n- 添加新功能\n- 添加测试"
+)
+```
+
+#### 代码搜索和文档查询
+
+```python
+# ✅ 搜索代码片段
+search_code(q="function:authenticate language:python repo:user/repo")
+
+# ✅ 搜索 Issue 和 PR
+search_issues(q="is:open label:bug state:open")
+
+# ✅ 获取文件内容
+get_file_contents(owner="user", repo="repo", path="README.md")
+```
+
+---
+
+## 🔧 Git MCP - 版本控制精确操作
+
+### 何时使用 Git MCP
+
+**优先使用场景：**
+1. ✅ 复杂的 Git 操作（rebase, cherry-pick）
+2. ✅ 查看 reflog 和历史
+3. ✅ 管理 worktree
+4. ✅ 详细的 diff 和 blame
+5. ✅ 标签管理
+
+### Git MCP 高级功能
+
+```python
+# ✅ 查看详细的文件历史
+git_log(filePath="src/main.py", maxCount=10)
+
+# ✅ 查看代码作者信息
+git_blame(file="src/utils.py", startLine=10, endLine=50)
+
+# ✅ 交互式 rebase
+git_rebase(upstream="main", interactive=True)
+
+# ✅ Cherry-pick 特定提交
+git_cherry_pick(commits=["abc123", "def456"])
+
+# ✅ 管理多个工作树
+git_worktree(mode="add", worktreePath="../feature-branch", branch="feature/new-work")
+
+# ✅ 查看 reflog（恢复丢失的提交）
+git_reflog(maxCount=20)
+```
+
+#### Git 工作流模式
+
+```python
+# ✅ 功能开发工作流
+# 1. 创建功能分支
+git_branch(operation="create", name="feature/authentication")
+git_checkout(target="feature/authentication")
+
+# 2. 开发并提交
+git_add(files=["."])
+git_commit(message="feat: implement JWT authentication", author={"name": "...", "email": "..."})
+
+# 3. 推送到远程
+git_push(branch="feature/authentication", setUpstream=True)
+
+# 4. 如果需要更新基准分支
+git_fetch(remote="origin")
+git_rebase(upstream="origin/main")
+```
+
+---
+
+## 📖 Context7 MCP - 智能文档查询
+
+### 何时使用 Context7 MCP
+
+**优先使用场景：**
+1. ✅ 查询框架和库的最佳实践
+2. ✅ 获取 API 文档和示例
+3. ✅ 学习新技术栈
+4. ✅ 解决技术问题
+5. ✅ 查找代码模式
+
+### Context7 查询策略
+
+```python
+# ✅ 两步查询法
+# 第 1 步：解析库 ID
+resolve_library_id("react hooks")
+
+# 第 2 步：获取文档
+get_library_docs(
+  context7CompatibleLibraryID="/facebook/react",
+  topic="hooks, useState, useEffect, best practices",
+  tokens=5000
+)
+```
+
+#### Context7 使用场景示例
+
+```python
+# ✅ 场景 1：学习新框架
+resolve_library_id("fastapi")
+get_library_docs("/tiangolo/fastapi", topic="getting started, routing, middleware")
+
+# ✅ 场景 2：查询设计模式
+resolve_library_id("design patterns python")
+get_library_docs("/...", topic="singleton, factory, observer patterns")
+
+# ✅ 场景 3：解决特定问题
+resolve_library_id("postgresql performance")
+get_library_docs("/...", topic="query optimization, indexing, connection pooling")
+```
+
+---
+
+## 🌐 Puppeteer MCP - 浏览器自动化
+
+### 何时使用 Puppeteer MCP
+
+**必须使用的场景：**
+1. ✅ Web 应用端到端测试
+2. ✅ 验证前端渲染
+3. ✅ 截图和视觉回归测试
+4. ✅ 表单自动填充测试
+5. ✅ JavaScript 执行和调试
+
+#### Puppeteer 测试工作流
+
+```python
+# ✅ 完整的测试流程
+# 1. 导航到页面
+puppeteer_navigate(url="http://localhost:3000", allowDangerous=False)
+
+# 2. 截图验证
+puppeteer_screenshot(name="homepage", width=1920, height=1080)
+
+# 3. 交互测试
+puppeteer_click(selector="#login-button")
+puppeteer_fill(selector="#username", value="testuser")
+puppeteer_fill(selector="#password", value="testpass")
+puppeteer_click(selector="#submit")
+
+# 4. 执行 JavaScript
+puppeteer_evaluate(script="return document.title")
+
+# 5. 验证结果
+puppeteer_screenshot(name="after-login")
+```
+
+---
+
+## 🧠 Sequential Thinking MCP - 智能问题解决
+
+### 何时使用 Sequential Thinking MCP
+
+**必须使用的场景：**
+1. ✅ 复杂问题的系统化分解和解决
+2. ✅ 需要多步骤推理的任务规划
+3. ✅ 智能工具推荐和执行顺序建议
+4. ✅ 带有分支和修订的动态思考过程
+5. ✅ 需要跟踪思考历史和进度的场景
+
+**不要使用的场景：**
+- ❌ 简单的单步操作
+- ❌ 不需要推理的机械任务
+- ❌ 已经明确知道执行步骤的常规操作
+
+### Sequential Thinking 核心特性
+
+**1. 动态和反思性问题解决**
+- 通过顺序思考分解复杂问题
+- 支持思考过程的灵活调整和演化
+- 可以分支探索不同方法
+- 支持基于新信息修订之前的思考
+
+**2. 智能工具推荐**
+- LLM 驱动的工具推荐系统
+- 为每个步骤提供置信度评分的工具建议
+- 详细的工具选择理由说明
+- 按优先级排序的替代工具建议
+- 建议的工具输入参数
+
+**3. 进度跟踪和上下文管理**
+- 跟踪已完成的步骤
+- 维护剩余步骤的高层描述
+- 预期结果定义
+- 下一步条件判断
+- 可配置的历史记录限制（默认 1000）
+
+### Sequential Thinking 工作流程
+
+```json
+{
+  "thought": "初步研究步骤，理解 Svelte 5 的通用响应式",
+  "current_step": {
+    "step_description": "收集关于 Svelte 5 通用响应式的初步信息",
+    "expected_outcome": "清楚理解通用响应式概念",
+    "recommended_tools": [
+      {
+        "tool_name": "context7_search",
+        "confidence": 0.9,
+        "rationale": "搜索 Svelte 官方文档获取权威信息",
+        "priority": 1
+      },
+      {
+        "tool_name": "web_fetch",
+        "confidence": 0.8,
+        "rationale": "从可靠来源获取额外上下文",
+        "priority": 2
+      }
+    ],
+    "next_step_conditions": [
+      "验证信息准确性",
+      "寻找实现细节"
+    ]
+  },
+  "thought_number": 1,
+  "total_thoughts": 5,
+  "next_thought_needed": true
+}
+```
+
+#### Sequential Thinking 使用示例
+
+**场景 1：复杂功能开发**
+```python
+# ✅ 使用 Sequential Thinking 指导开发流程
+sequentialthinking_tools(
+  available_mcp_tools=["filesystem", "memory", "github", "context7"],
+  thought="分析需求，确定实现 OAuth2 认证的最佳方案",
+  thought_number=1,
+  total_thoughts=8,
+  next_thought_needed=True,
+  current_step={
+    "step_description": "研究 OAuth2 最佳实践和库选择",
+    "recommended_tools": [
+      {"tool_name": "context7", "confidence": 0.95, "priority": 1},
+      {"tool_name": "github", "confidence": 0.85, "priority": 2}
+    ],
+    "expected_outcome": "选定合适的 OAuth2 库和实现策略",
+    "next_step_conditions": [
+      "库文档完整",
+      "社区活跃"
+    ]
+  }
+)
+```
+
+**场景 2：调试复杂问题**
+```python
+# ✅ 使用分支思考探索不同的调试方向
+sequentialthinking_tools(
+  available_mcp_tools=["filesystem", "git", "puppeteer"],
+  thought="性能问题可能来自前端渲染或后端查询",
+  thought_number=3,
+  total_thoughts=6,
+  next_thought_needed=True,
+  branch_from_thought=2,
+  branch_id="performance-frontend",
+  current_step={
+    "step_description": "使用浏览器工具分析前端性能",
+    "recommended_tools": [
+      {"tool_name": "puppeteer", "confidence": 0.9, "priority": 1}
+    ],
+    "expected_outcome": "识别前端性能瓶颈"
+  }
+)
+```
+
+**场景 3：修订之前的思考**
+```python
+# ✅ 基于新发现修订之前的决策
+sequentialthinking_tools(
+  available_mcp_tools=["memory", "filesystem"],
+  thought="基于性能测试结果，调整缓存策略",
+  thought_number=5,
+  total_thoughts=7,
+  next_thought_needed=True,
+  is_revision=True,
+  revises_thought=2,
+  current_step={
+    "step_description": "更新架构文档，反映数据库变更",
+    "recommended_tools": [
+      {"tool_name": "filesystem", "confidence": 1.0, "priority": 1},
+      {"tool_name": "memory", "confidence": 0.9, "priority": 2}
+    ],
+    "expected_outcome": "架构文档已更新"
+  }
+)
+```
+
+#### Sequential Thinking 最佳实践
+
+**1. 提供准确的工具列表**
+```python
+# ✅ 列出所有可用的 MCP 工具
+available_mcp_tools = [
+  "filesystem",
+  "memory",
+  "github",
+  "git",
+  "context7",
+  "puppeteer",
+  "fetch"
+]
+```
+
+**2. 明确期望结果**
+```python
+# ✅ 为每个步骤定义清晰的期望结果
+current_step = {
+  "step_description": "实现用户认证模块",
+  "expected_outcome": "JWT 认证功能完整，包含测试",
+  "next_step_conditions": [
+    "所有单元测试通过",
+    "安全审查完成"
+  ]
+}
+```
+
+**3. 合理估计总思考数**
+```python
+# ✅ 根据任务复杂度估计
+# 简单任务：3-5 个思考步骤
+# 中等任务：5-10 个思考步骤
+# 复杂任务：10-20 个思考步骤
+
+total_thoughts = 8  # 可以根据进展动态调整
+```
+
+**4. 利用分支探索多种方案**
+```python
+# ✅ 遇到不确定性时创建分支
+# 主分支：探索方案 A
+sequentialthinking_tools(
+  thought="探索使用 Redis 作为缓存",
+  branch_id="cache-redis",
+  branch_from_thought=3
+)
+
+# 另一分支：探索方案 B
+sequentialthinking_tools(
+  thought="探索使用 Memcached 作为缓存",
+  branch_id="cache-memcached",
+  branch_from_thought=3
+)
+```
+
+**5. 适时修订和调整**
+```python
+# ✅ 发现新信息时及时修订
+sequentialthinking_tools(
+  is_revision=True,
+  revises_thought=4,
+  thought="基于性能测试结果，调整缓存策略"
+)
+```
+
+#### Memory 管理
+
+**配置历史记录大小：**
+```json
+{
+  "mcpServers": {
+    "sequential-thinking": {
+      "env": {
+        "MAX_HISTORY_SIZE": "1000"  // 可调整
+      }
+    }
+  }
+}
+```
+
+**历史管理策略：**
+- 默认保留最近 1000 个思考步骤
+- 超出限制时自动修剪旧记录
+- 对于长期项目，建议增加限制
+- 完成阶段性任务后可手动清理
+
+#### 与其他 MCP 工具的协同
+
+**1. 与 Memory MCP 协同**
+```python
+# Sequential Thinking 推荐使用 Memory
+# → 记录关键决策到知识图谱
+create_entities([{
+  "name": "AuthenticationStrategy",
+  "entityType": "decision",
+  "observations": [
+    "基于 Sequential Thinking 第 3 步的分析",
+    "选择 JWT 而非 Session",
+    "理由：更适合微服务架构"
+  ]
+}])
+```
+
+**2. 与 Context7 MCP 协同**
+```python
+# Sequential Thinking 推荐查询文档
+# → 使用 Context7 获取最佳实践
+resolve_library_id("fastapi authentication")
+get_library_docs("/tiangolo/fastapi", topic="security, JWT, OAuth2")
+```
+
+**3. 与 Filesystem MCP 协同**
+```python
+# Sequential Thinking 推荐读取代码
+# → 使用 Filesystem 批量读取
+read_multiple_files([
+  "src/auth/jwt.py",
+  "src/auth/oauth.py",
+  "tests/test_auth.py"
+])
+```
+
+---
+
+## 🔄 MCP 工具组合模式
+
+### 链式工作流（Chain of Tools）
+
+```python
+# ✅ 示例：完整的功能开发流程
+# 1. 使用 Context7 查询最佳实践
+resolve_library_id("react testing library")
+get_library_docs("/...", topic="best practices, testing hooks")
+
+# 2. 使用 Memory MCP 记录决策
+create_entities([{
+  "name": "TestingStrategy",
+  "entityType": "decision",
+  "observations": ["使用 React Testing Library", "优先集成测试"]
+}])
+
+# 3. 使用 Filesystem MCP 创建文件
+write_file("tests/component.test.jsx", content="...")
+
+# 4. 使用 Git MCP 提交
+git_add(files=["."])
+git_commit(message="feat: add component tests")
+
+# 5. 使用 Puppeteer MCP 验证
+puppeteer_navigate(url="http://localhost:3000")
+puppeteer_screenshot(name="component-render")
+
+# 6. 使用 GitHub MCP 创建 PR
+create_pull_request(...)
+```
+
+#### 并行操作优化
+
+```python
+# ✅ 批量读取文件（并行）
+read_multiple_files([
+  "src/file1.py",
+  "src/file2.py",
+  "src/file3.py"
+])
+
+# ✅ 批量推送文件到 GitHub
+push_files(
+  owner="user",
+  repo="repo",
+  branch="main",
+  files=[...],  # 多个文件一次推送
+  message="feat: multiple updates"
+)
+```
+
+---
+
+## 🎯 MCP 工具使用检查清单
+
+#### 开始任务前
+
+- [ ] 是否需要查询文档？→ 使用 Context7 MCP
+- [ ] 是否需要记录关键信息？→ 使用 Memory MCP
+- [ ] 是否需要批量文件操作？→ 使用 Filesystem MCP
+- [ ] 是否需要 Git 操作？→ 使用 Git MCP
+- [ ] 是否需要 GitHub 集成？→ 使用 GitHub MCP
+- [ ] 是否需要浏览器测试？→ 使用 Puppeteer MCP
+- [ ] 是否是复杂问题需要系统化分解？→ 使用 Sequential Thinking MCP
+
+#### 任务执行中
+
+- [ ] 遇到技术问题时，先用 Context7 查询
+- [ ] 重要决策记录到 Memory MCP
+- [ ] 使用合适的 MCP 工具而非传统方法
+- [ ] 批量操作优先（read_multiple_files, push_files）
+- [ ] 复杂任务使用 Sequential Thinking 指导工具选择
+
+#### 任务完成后
+
+- [ ] 更新 Memory MCP 知识图谱
+- [ ] 使用 Git MCP 提交代码
+- [ ] 使用 GitHub MCP 创建 PR（如果需要）
+- [ ] 使用 Puppeteer MCP 验证（Web 项目）
+
+---
+
+## 🚀 MCP 工具使用的黄金规则
+
+#### 规则 1：MCP 优先原则
+**永远优先考虑使用 MCP 工具，除非有明确的理由不使用。**
+
+#### 规则 2：批量操作原则
+**能批量就不要单个，能并行就不要串行。**
+
+#### 规则 3：知识积累原则
+**所有重要信息都应记录到 Memory MCP。**
+
+#### 规则 4：文档先行原则
+**遇到不熟悉的技术，先用 Context7 查询最佳实践。**
+
+#### 规则 5：工作流自动化原则
+**使用 MCP 工具链构建自动化工作流。**
+
+---
+
+## 🔍 问题解决与 MCP 扩展策略
+
+#### 问题解决优先级流程
+
+**当遇到无法解决的问题时，按以下顺序执行：**
+
+```
+遇到问题
+  ↓
+第 1 步：查询现有文档和知识
+  ├─ Context7 MCP 查询相关技术文档
+  ├─ web_fetch 搜索网页资源
+  ├─ Puppeteer MCP 浏览器访问动态网页
+  ├─ browser_action 交互式网页浏览
+  ├─ Memory MCP 查询项目历史经验
+  └─ Filesystem MCP 搜索本地文档
+  ↓
+问题解决？
+  ├─ 是 → 记录解决方案到 Memory MCP
+  └─ 否 → 继续第 2 步
+  ↓
+第 2 步：搜索 GitHub MCP 服务器
+  ├─ 使用 GitHub MCP 搜索相关服务器
+  ├─ 评估服务器的适用性和质量
+  └─ 选择最合适的 MCP 服务器
+  ↓
+第 3 步：安装和配置 MCP 服务器
+  ├─ 生成安装命令供用户执行
+  ├─ 读取当前 MCP 配置文件
+  ├─ 添加新服务器配置到 JSON（包含 autoApprove 所有工具）
+  ├─ 使用 replace_in_file 直接更新配置文件
+  └─ 提示用户重启 Cline 使配置生效
+  ↓
+第 4 步：配置验证和文档更新
+  ├─ 用户重启 Cline 后验证新工具是否可用
+  ├─ 在 mcp-tools.mdc 添加工具说明
+  ├─ 记录使用场景和最佳实践
+  └─ 更新 MCP 工具清单
+```
+
+#### MCP 服务器发现和评估
+
+##### 1. 搜索 GitHub 上的 MCP 服务器
+
+```python
+# ✅ 使用 GitHub MCP 搜索相关服务器
+search_repositories(
+  query="MCP server [你的需求关键词]",
+  perPage=10
+)
+
+# 示例：搜索数据库相关的 MCP 服务器
+search_repositories(
+  query="MCP server database",
+  perPage=10
+)
+```
+
+##### 2. 评估 MCP 服务器质量
+
+**评估标准：**
+- ⭐ **Stars 数量**：社区认可度（> 100 stars 较好）
+- 📝 **文档完整性**：是否有清晰的 README 和使用说明
+- 🔄 **更新频率**：最近是否有维护（< 6 个月为活跃）
+- 🐛 **Issue 处理**：Issue 是否得到及时响应
+- 🧪 **测试覆盖**：是否有测试和示例
+- 🔒 **安全性**：代码质量和安全审查
+- 📦 **依赖管理**：依赖是否合理和安全
+
+**快速检查清单：**
+```markdown
+- [ ] 仓库活跃（最近 6 个月有更新）
+- [ ] 文档清晰（README 完整）
+- [ ] 有使用示例
+- [ ] Star 数 > 50（或新项目但质量高）
+- [ ] 无明显安全问题
+- [ ] 符合我们的需求场景
+```
+
+#### MCP 服务器安装和配置
+
+##### 1. 标准安装流程
+
+```bash
+# 步骤 1：克隆或安装 MCP 服务器
+# 根据服务器类型选择：
+
+# A. Node.js 服务器
+npm install -g [mcp-server-package]
+
+# B. Python 服务器
+pip install [mcp-server-package]
+
+# C. 从源码安装
+git clone [repository-url]
+cd [repository-name]
+npm install  # 或 pip install -e .
+
+# 步骤 2：测试服务器
+# 运行服务器测试确保正常工作
+[mcp-server-command] --test
+```
+
+##### 2. 配置到 Cline
+
+**配置文件位置：**
+- VS Code Settings：`settings.json`
+- Cline MCP 配置：`%APPDATA%\Code\User\globalStorage\saoudrizwan.claude-dev\settings\cline_mcp_settings.json`
+
+**配置示例：**
+```json
+{
+  "mcpServers": {
+    "[服务器名称]": {
+      "command": "[命令]",
+      "args": ["[参数]"],
+      "env": {
+        "[环境变量]": "[值]"
+      }
+    }
+  }
+}
+```
+
+**具体示例：**
+```json
+{
+  "mcpServers": {
+    "database": {
+      "command": "mcp-server-database",
+      "args": ["--config", "database.json"],
+      "env": {
+        "DB_HOST": "localhost",
+        "DB_PORT": "5432"
+      }
+    }
+  }
+}
+```
+
+##### 3. 验证安装
+
+```python
+# ✅ 测试 MCP 工具是否可用
+# 尝试使用新安装的 MCP 工具
+# 如果工具名称出现在可用工具列表中，说明安装成功
+```
+
+#### 更新规则文档
+
+**当成功安装和配置新的 MCP 服务器后，必须更新 mcp-tools.mdc：**
+
+##### 1. 添加工具说明
+
+在 `mcp-tools.mdc` 的相应部分添加新工具：
+
+```markdown
+## 🔧 [工具名称] MCP - [简短描述]
+
+### 何时使用 [工具名称] MCP
+
+**必须使用的场景：**
+1. ✅ [场景 1]
+2. ✅ [场景 2]
+3. ✅ [场景 3]
+
+**不要使用的场景：**
+- ❌ [场景 1]
+- ❌ [场景 2]
+
+### [工具名称] 最佳实践
+
+[提供具体的使用示例和代码]
+
+### [工具名称] 常见问题
+
+[列出常见问题和解决方案]
+```
+
+##### 2. 更新工具决策树
+
+在 "工具选择决策树" 中添加新工具：
+
+```markdown
+任务类型 → 首选 MCP 工具 → 备选方案
+├─ [任务类型] → [新工具] MCP → [备选方案]
+```
+
+##### 3. 更新检查清单
+
+在 "MCP 工具使用检查清单" 中添加相关检查项：
+
+```markdown
+### 开始任务前
+- [ ] 是否需要 [功能]？→ 使用 [新工具] MCP
+```
+
+#### MCP 服务器管理最佳实践
+
+##### 1. 工具清单维护
+
+**在项目 README 或文档中维护 MCP 工具清单：**
+
+```markdown
+## 已安装的 MCP 服务器
+
+| 工具名称 | 用途 | 安装日期 | 版本 | 状态 |
+|---------|------|---------|------|------|
+| Filesystem | 文件操作 | 2025-11-01 | 1.0.0 | ✅ 活跃 |
+| Memory | 知识图谱 | 2025-11-01 | 1.0.0 | ✅ 活跃 |
+| GitHub | 代码仓库 | 2025-11-01 | 1.0.0 | ✅ 活跃 |
+| [新工具] | [用途] | [日期] | [版本] | ✅ 活跃 |
+```
+
+##### 2. 定期审查和更新
+
+**建议每月审查一次：**
+- [ ] 检查 MCP 服务器更新
+- [ ] 更新过时的工具
+- [ ] 移除不再使用的工具
+- [ ] 优化配置和性能
+
+##### 3. 记录到 Memory MCP
+
+```python
+# ✅ 记录新安装的 MCP 工具
+create_entities([
+  {
+    "name": "[工具名称]_MCP",
+    "entityType": "tool",
+    "observations": [
+      "用途：[描述]",
+      "安装日期：[日期]",
+      "配置：[关键配置]",
+      "使用场景：[场景列表]"
+    ]
+  }
+])
+
+# ✅ 建立与项目的关系
+create_relations([
+  {
+    "from": "Project",
+    "to": "[工具名称]_MCP",
+    "relationType": "uses_tool"
+  }
+])
+```
+
+---
+
+## 参考资源
+
+### MCP 官方文档
+- Model Context Protocol: https://modelcontextprotocol.io
+- Awesome MCP Servers: https://github.com/punkpeye/awesome-mcp-servers
+
+---
+
+**记住：充分利用 MCP 工具是高效 AI 辅助开发的关键！**

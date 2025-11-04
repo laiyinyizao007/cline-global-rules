@@ -1,0 +1,775 @@
+# 通用编码规则
+
+## 📑 目录导航
+
+### 编码规范
+- [核心原则](#核心原则)
+- [SOLID 原则](#solid-原则)
+- [其他原则](#其他原则)
+- [命名规范](#命名规范)
+- [函数设计](#函数设计)
+- [错误处理](#错误处理)
+- [安全实践](#安全实践)
+
+### 快速跳转
+- 📋 **看规范？** 从 [核心原则](#核心原则) 开始
+- 🏗️ **架构设计？** 查看 [SOLID 原则](#solid-原则)
+- 🔧 **查 MCP 工具？** 查看 [MCP 工具充分利用指南](#mcp-工具充分利用指南)
+
+---
+
+## 核心原则
+
+### 清晰沟通
+- 使用简洁明了的语言
+- 代码即文档
+- 注释说明"为什么"而非"做什么"
+
+### 代码质量
+- **Clean Code**：代码应该易读易懂
+- **可读性**：优先考虑代码的可读性
+- **单一职责**：每个模块、类、函数只做一件事
+
+### 最佳实践
+- 遵循项目现有风格
+- 保持一致性
+- 持续重构和改进
+
+---
+
+## SOLID 原则
+
+### S - Single Responsibility（单一职责原则）
+**定义：** 一个类应该只有一个引起它变化的原因。
+
+**示例：**
+```python
+# ❌ 不好：一个类做太多事
+class User:
+    def __init__(self, name):
+        self.name = name
+    
+    def save_to_database(self):
+        # 数据库操作
+        pass
+    
+    def send_email(self):
+        # 邮件发送
+        pass
+    
+    def generate_report(self):
+        # 报表生成
+        pass
+
+# ✅ 好：职责分离
+class User:
+    def __init__(self, name):
+        self.name = name
+
+class UserRepository:
+    def save(self, user):
+        # 数据库操作
+        pass
+
+class EmailService:
+    def send(self, user, message):
+        # 邮件发送
+        pass
+
+class ReportGenerator:
+    def generate(self, user):
+        # 报表生成
+        pass
+```
+
+### O - Open/Closed（开闭原则）
+**定义：** 软件实体应该对扩展开放，对修改关闭。
+
+**示例：**
+```python
+# ❌ 不好：需要修改现有代码来添加新功能
+class PaymentProcessor:
+    def process(self, payment_type):
+        if payment_type == "credit_card":
+            # 处理信用卡
+            pass
+        elif payment_type == "paypal":
+            # 处理 PayPal
+            pass
+        # 添加新支付方式需要修改这个方法
+
+# ✅ 好：使用抽象和多态
+class PaymentProcessor:
+    def process(self, payment_method):
+        payment_method.pay()
+
+class CreditCardPayment:
+    def pay(self):
+        # 处理信用卡
+        pass
+
+class PayPalPayment:
+    def pay(self):
+        # 处理 PayPal
+        pass
+
+# 添加新支付方式无需修改现有代码
+class AlipayPayment:
+    def pay(self):
+        # 处理支付宝
+        pass
+```
+
+### L - Liskov Substitution（里氏替换原则）
+**定义：** 子类对象应该能够替换其父类对象。
+
+**示例：**
+```python
+# ❌ 不好：子类改变了父类的行为
+class Bird:
+    def fly(self):
+        return "飞行"
+
+class Penguin(Bird):
+    def fly(self):
+        raise Exception("企鹅不会飞")  # 违反了里氏替换原则
+
+# ✅ 好：正确的继承层次
+class Bird:
+    def move(self):
+        pass
+
+class FlyingBird(Bird):
+    def move(self):
+        return "飞行"
+
+class Penguin(Bird):
+    def move(self):
+        return "游泳"
+```
+
+### I - Interface Segregation（接口隔离原则）
+**定义：** 不应该强迫客户端依赖它不使用的接口。
+
+**示例：**
+```python
+# ❌ 不好：臃肿的接口
+class Worker:
+    def work(self):
+        pass
+    
+    def eat(self):
+        pass
+    
+    def sleep(self):
+        pass
+
+class Robot(Worker):
+    def work(self):
+        # 机器人工作
+        pass
+    
+    def eat(self):
+        # 机器人不需要吃饭！
+        raise NotImplementedError
+    
+    def sleep(self):
+        # 机器人不需要睡觉！
+        raise NotImplementedError
+
+# ✅ 好：分离的接口
+class Workable:
+    def work(self):
+        pass
+
+class Eatable:
+    def eat(self):
+        pass
+
+class Sleepable:
+    def sleep(self):
+        pass
+
+class Human(Workable, Eatable, Sleepable):
+    def work(self):
+        pass
+    
+    def eat(self):
+        pass
+    
+    def sleep(self):
+        pass
+
+class Robot(Workable):
+    def work(self):
+        pass
+```
+
+### D - Dependency Inversion（依赖倒置原则）
+**定义：** 高层模块不应该依赖低层模块，两者都应该依赖抽象。
+
+**示例：**
+```python
+# ❌ 不好：高层模块依赖低层模块
+class MySQLDatabase:
+    def connect(self):
+        pass
+    
+    def query(self, sql):
+        pass
+
+class UserService:
+    def __init__(self):
+        self.db = MySQLDatabase()  # 直接依赖具体实现
+    
+    def get_user(self, user_id):
+        return self.db.query(f"SELECT * FROM users WHERE id={user_id}")
+
+# ✅ 好：依赖抽象
+from abc import ABC, abstractmethod
+
+class Database(ABC):
+    @abstractmethod
+    def connect(self):
+        pass
+    
+    @abstractmethod
+    def query(self, sql):
+        pass
+
+class MySQLDatabase(Database):
+    def connect(self):
+        pass
+    
+    def query(self, sql):
+        pass
+
+class PostgreSQLDatabase(Database):
+    def connect(self):
+        pass
+    
+    def query(self, sql):
+        pass
+
+class UserService:
+    def __init__(self, database: Database):
+        self.db = database  # 依赖抽象
+    
+    def get_user(self, user_id):
+        return self.db.query(f"SELECT * FROM users WHERE id={user_id}")
+```
+
+---
+
+## 其他原则
+
+### KISS - Keep It Simple, Stupid
+**含义：** 保持简单
+
+**实践：**
+- 避免过度设计
+- 选择最简单的解决方案
+- 不要为了"未来可能需要"而增加复杂性
+
+```python
+# ❌ 过度复杂
+def calculate_total(items):
+    return functools.reduce(
+        lambda acc, item: acc + item.price * item.quantity,
+        items,
+        0
+    )
+
+# ✅ 简单直接
+def calculate_total(items):
+    total = 0
+    for item in items:
+        total += item.price * item.quantity
+    return total
+```
+
+### DRY - Don't Repeat Yourself
+**含义：** 不要重复自己
+
+**实践：**
+- 提取重复代码为函数
+- 使用继承和组合
+- 创建可重用的模块
+
+```python
+# ❌ 重复代码
+def validate_email(email):
+    if "@" not in email:
+        raise ValueError("无效的邮箱")
+    if "." not in email:
+        raise ValueError("无效的邮箱")
+
+def validate_user_email(user):
+    email = user.email
+    if "@" not in email:
+        raise ValueError("无效的邮箱")
+    if "." not in email:
+        raise ValueError("无效的邮箱")
+
+# ✅ 提取公共逻辑
+def is_valid_email(email):
+    return "@" in email and "." in email
+
+def validate_email(email):
+    if not is_valid_email(email):
+        raise ValueError("无效的邮箱")
+
+def validate_user_email(user):
+    validate_email(user.email)
+```
+
+### YAGNI - You Aren't Gonna Need It
+**含义：** 你不会需要它
+
+**实践：**
+- 只实现当前需要的功能
+- 不要为"可能需要"的功能编码
+- 需要时再添加
+
+```python
+# ❌ 过度设计
+class User:
+    def __init__(self, name):
+        self.name = name
+        self.preferences = {}  # 现在不需要
+        self.settings = {}     # 现在不需要
+        self.metadata = {}     # 现在不需要
+
+# ✅ 只实现需要的
+class User:
+    def __init__(self, name):
+        self.name = name
+```
+
+---
+
+## 命名规范
+
+### 变量命名
+**原则：** 描述性、有意义、避免缩写
+
+```python
+# ❌ 不好的命名
+x = 10
+data = fetch()
+tmp = calc(a, b)
+usr_cnt = count_users()
+
+# ✅ 好的命名
+max_retries = 10
+user_data = fetch_user_data()
+calculated_price = calculate_price(base_price, tax_rate)
+user_count = count_active_users()
+```
+
+**常用模式：**
+- 计数：`user_count`, `item_count`
+- 布尔值：`is_active`, `has_permission`, `can_edit`
+- 临时变量：`temp_file`, `temp_data`（但尽量避免）
+
+### 函数命名
+**原则：** 动词开头、清晰表达意图
+
+```python
+# ❌ 不好的命名
+def data(user):
+    pass
+
+def user(id):
+    pass
+
+# ✅ 好的命名
+def fetch_user_data(user):
+    pass
+
+def get_user_by_id(user_id):
+    pass
+
+def validate_email(email):
+    pass
+
+def calculate_total_price(items):
+    pass
+
+def send_notification(user, message):
+    pass
+```
+
+**常用动词前缀：**
+- `get_*`: 获取数据
+- `set_*`: 设置数据
+- `create_*`: 创建新对象
+- `update_*`: 更新现有对象
+- `delete_*`: 删除对象
+- `validate_*`: 验证数据
+- `calculate_*`: 计算结果
+- `is_*`, `has_*`, `can_*`: 返回布尔值
+
+### 类命名
+**原则：** 名词、帕斯卡命名法
+
+```python
+# ❌ 不好的命名
+class userData:
+    pass
+
+class process:
+    pass
+
+# ✅ 好的命名
+class UserAccount:
+    pass
+
+class OrderProcessor:
+    pass
+
+class PaymentGateway:
+    pass
+
+class EmailService:
+    pass
+```
+
+### 常量命名
+**原则：** 全大写、下划线分隔
+
+```python
+# ✅ 常量命名
+MAX_RETRIES = 3
+DEFAULT_TIMEOUT = 30
+API_BASE_URL = "https://api.example.com"
+ERROR_MESSAGES = {
+    "NOT_FOUND": "资源未找到",
+    "UNAUTHORIZED": "未授权访问"
+}
+```
+
+---
+
+## 函数设计
+
+### 函数应该简短
+**原则：** 一个函数通常应该少于 20 行
+
+```python
+# ❌ 太长的函数
+def process_order(order):
+    # 50+ 行代码...
+    pass
+
+# ✅ 分解为小函数
+def process_order(order):
+    validate_order(order)
+    calculate_total(order)
+    apply_discounts(order)
+    process_payment(order)
+    send_confirmation(order)
+
+def validate_order(order):
+    # 5-10 行
+    pass
+
+def calculate_total(order):
+    # 5-10 行
+    pass
+```
+
+### 单一职责
+**原则：** 一个函数只做一件事
+
+```python
+# ❌ 函数做太多事
+def save_user_and_send_email(user):
+    # 保存用户
+    db.save(user)
+    # 发送邮件
+    email.send(user)
+    # 记录日志
+    logger.log(f"User {user.name} created")
+
+# ✅ 分离职责
+def save_user(user):
+    db.save(user)
+
+def send_welcome_email(user):
+    email.send(user)
+
+def log_user_creation(user):
+    logger.log(f"User {user.name} created")
+
+# 在更高层组合
+def create_user(user):
+    save_user(user)
+    send_welcome_email(user)
+    log_user_creation(user)
+```
+
+### 参数数量
+**原则：** 参数应该少于 3-4 个
+
+```python
+# ❌ 太多参数
+def create_user(name, email, age, address, phone, country, city, zip_code):
+    pass
+
+# ✅ 使用对象封装
+class UserInfo:
+    def __init__(self, name, email, age, address):
+        self.name = name
+        self.email = email
+        self.age = age
+        self.address = address
+
+def create_user(user_info: UserInfo):
+    pass
+
+# ✅ 或使用字典
+def create_user(user_data: dict):
+    name = user_data['name']
+    email = user_data['email']
+    # ...
+```
+
+### 避免副作用
+**原则：** 函数应该是纯函数或明确表明有副作用
+
+```python
+# ❌ 隐藏的副作用
+def calculate_discount(price):
+    global total_discount  # 副作用！
+    discount = price * 0.1
+    total_discount += discount
+    return discount
+
+# ✅ 明确的副作用或纯函数
+def calculate_discount(price):
+    return price * 0.1  # 纯函数
+
+def apply_discount_and_update_total(price, total_discount):
+    discount = calculate_discount(price)
+    return discount, total_discount + discount  # 明确返回
+```
+
+---
+
+## 错误处理
+
+### 使用具体的异常类型
+```python
+# ❌ 不要使用通用异常
+def get_user(user_id):
+    if user_id < 0:
+        raise Exception("Invalid ID")  # 太泛化
+
+# ✅ 使用具体的异常
+class InvalidUserIdError(ValueError):
+    pass
+
+class UserNotFoundError(LookupError):
+    pass
+
+def get_user(user_id):
+    if user_id < 0:
+        raise InvalidUserIdError(f"User ID must be positive, got {user_id}")
+    
+    user = db.find_user(user_id)
+    if user is None:
+        raise UserNotFoundError(f"User with ID {user_id} not found")
+    
+    return user
+```
+
+### 提供清晰的错误信息
+```python
+# ❌ 不清晰的错误信息
+raise ValueError("Invalid input")
+
+# ✅ 清晰的错误信息
+raise ValueError(
+    f"Expected email format 'user@domain.com', "
+    f"but got '{email}'"
+)
+```
+
+### 适当的日志记录
+```python
+import logging
+
+logger = logging.getLogger(__name__)
+
+def process_payment(order):
+    try:
+        logger.info(f"Processing payment for order {order.id}")
+        payment_result = payment_gateway.charge(order.amount)
+        logger.info(f"Payment successful for order {order.id}")
+        return payment_result
+    except PaymentError as e:
+        logger.error(
+            f"Payment failed for order {order.id}: {e}",
+            exc_info=True  # 包含堆栈跟踪
+        )
+        raise
+    except Exception as e:
+        logger.exception(
+            f"Unexpected error processing payment for order {order.id}"
+        )
+        raise
+```
+
+### 优雅降级
+```python
+def get_user_preferences(user_id):
+    try:
+        return api.fetch_preferences(user_id)
+    except APIError:
+        logger.warning(f"Failed to fetch preferences for user {user_id}, using defaults")
+        return default_preferences()
+```
+
+---
+
+## 安全实践
+
+### 避免硬编码敏感信息
+```python
+# ❌ 不要硬编码
+DATABASE_PASSWORD = "my_secret_password"
+API_KEY = "sk-1234567890abcdef"
+
+# ✅ 使用环境变量
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+DATABASE_PASSWORD = os.getenv("DATABASE_PASSWORD")
+API_KEY = os.getenv("API_KEY")
+
+if not DATABASE_PASSWORD:
+    raise ValueError("DATABASE_PASSWORD environment variable not set")
+```
+
+### 输入验证
+```python
+def create_user(user_data):
+    # ✅ 验证所有输入
+    if not user_data.get('email'):
+        raise ValueError("Email is required")
+    
+    if not is_valid_email(user_data['email']):
+        raise ValueError("Invalid email format")
+    
+    if len(user_data.get('password', '')) < 8:
+        raise ValueError("Password must be at least 8 characters")
+    
+    # 继续处理...
+```
+
+### SQL 注入防护
+```python
+# ❌ 不要拼接 SQL
+def get_user(user_id):
+    query = f"SELECT * FROM users WHERE id = {user_id}"  # 危险！
+    return db.execute(query)
+
+# ✅ 使用参数化查询
+def get_user(user_id):
+    query = "SELECT * FROM users WHERE id = ?"
+    return db.execute(query, (user_id,))
+
+# ✅ 或使用 ORM
+def get_user(user_id):
+    return User.objects.get(id=user_id)
+```
+
+### XSS 防护
+```python
+from html import escape
+
+# ✅ 转义用户输入
+def display_comment(comment):
+    safe_comment = escape(comment.text)
+    return f"<p>{safe_comment}</p>"
+```
+
+### CSRF 防护
+```python
+# ✅ 使用 CSRF 令牌
+from flask_wtf.csrf import CSRFProtect
+
+app = Flask(__name__)
+csrf = CSRFProtect(app)
+
+@app.route('/update', methods=['POST'])
+def update_data():
+    # CSRF 令牌会自动验证
+    pass
+```
+
+---
+
+## MCP 工具指南
+
+### 🎯 工具选择决策树
+
+**始终优先考虑使用 MCP 工具，而不是传统方法！**
+
+```
+任务类型 → 首选 MCP 工具 → 备选方案
+├─ 文件操作 → Filesystem MCP → read_file/write_to_file
+├─ 知识管理 → Memory MCP → 内存文件
+├─ 代码仓库 → GitHub MCP → Git MCP
+├─ 版本控制 → Git MCP → execute_command
+├─ 文档查询 → Context7 MCP → web_fetch
+├─ 浏览器测试 → Puppeteer MCP → browser_action
+└─ 复杂问题解决 → Sequential Thinking MCP → 手动规划
+```
+
+### 🔧 核心 MCP 工具使用原则
+
+**Filesystem MCP** - 高效文件操作
+- 优先使用批量操作：`read_multiple_files()` 而非逐个 `read_file()`
+- 使用 `directory_tree()` 获取完整目录结构
+- 利用 `search_files()` 进行高效文件搜索
+
+**Memory MCP** - 知识图谱管理
+- 使用实体-关系-观察模型组织知识
+- 通过 `search_nodes()` 快速检索信息
+- 建立实体间的关系网络
+
+**Git MCP** - 版本控制
+- 使用高级操作：`git_rebase()`, `git_blame()`, `git_cherry_pick()`
+- 管理复杂分支策略和历史分析
+- 批量操作多个文件和分支
+
+### 📖 完整 MCP 工具指南
+
+**详细使用指南** → 参见 `mcp-tools.mdc`
+
+---
+
+**MCP 优先原则：永远优先使用 MCP 工具！**
+
+---
+
+## 参考资源
+
+### 中文编码规范
+- **C:\Dev\rules\ai-instructions\general-rules.md** - 详细中文编码规范
+- **C:\Dev\rules\ai-instructions\cline-specific.md** - Cline 特定规则
+
+### MCP 官方文档
+- Model Context Protocol: https://modelcontextprotocol.io
+- Awesome MCP Servers: https://github.com/punkpeye/awesome-mcp-servers
+
+### 项目模板
+- **C:\Dev\templates\** - 各类项目模板
+
+---
+
+**记住：编写清晰、可维护的代码比编写"聪明"的代码更重要！**
