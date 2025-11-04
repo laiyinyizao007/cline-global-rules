@@ -5,6 +5,21 @@ All notable changes to Darwin Rules will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- 🚀 **dr-update.ps1** - 智能双向同步工具（合并sync-to-local和sync-to-github）
+  - 自动检测本地和远程变化
+  - 智能选择同步策略（pull/push/双向）
+  - 支持4种场景：无变化/仅远程/仅本地/双向更新
+  - 自动合并处理
+  - 冲突检测和恢复指导
+  - 支持-AutoCommit自动生成提交信息
+  - 支持-Force强制同步
+
+### Changed
+- 📝 更新README.md，推荐使用dr-update进行同步
+
 ## [2.0.0] - 2025-11-04
 
 ### Added

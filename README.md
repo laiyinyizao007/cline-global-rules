@@ -58,14 +58,37 @@ darwinRules/
 
 ## 🔄 日常使用
 
-### 更新公用规则
+### 智能双向同步（推荐）⭐
+
+使用新的`dr-update`工具，自动处理本地和GitHub的同步：
+
+```powershell
+# 自动检测并同步（最简单）
+pwsh C:\Dev\global-config\darwinRules\scripts\sync\dr-update.ps1 -AutoCommit
+
+# 手动指定提交信息
+pwsh C:\Dev\global-config\darwinRules\scripts\sync\dr-update.ps1 -Message "更新说明"
+
+# 强制同步，不确认
+pwsh C:\Dev\global-config\darwinRules\scripts\sync\dr-update.ps1 -AutoCommit -Force
+```
+
+**智能功能：**
+- ✅ 自动检测本地和远程变化
+- ✅ 智能选择同步策略（pull/push/双向）
+- ✅ 自动处理合并
+- ✅ 冲突提示和恢复指导
+
+### 传统方式
+
+#### 只从GitHub拉取更新
 
 ```powershell
 cd C:\Dev\global-config\darwinRules
 git pull
 ```
 
-### 贡献规则改进
+#### 只推送本地更改
 
 ```powershell
 cd C:\Dev\global-config\darwinRules
