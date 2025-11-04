@@ -16,6 +16,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - 冲突检测和恢复指导
   - 支持-AutoCommit自动生成提交信息
   - 支持-Force强制同步
+- 🎯 **混合模式（Hybrid Mode）** - 智能规则加载系统 ⭐⭐
+  - **scripts/utils/smart-loader.ps1** - 智能加载器脚本
+    * 优先从GitHub获取最新版本
+    * 自动同步到本地作为备份
+    * GitHub失败时使用本地备份
+    * 支持-ForceLocal强制使用本地版本
+    * 无缓存过期概念，总是尝试获取最新
+  - **templates/hybrid-mode/.darwin-link.example** - 混合模式配置模板
+    * GitHub优先级1，本地优先级2
+    * 完整的规则加载顺序定义
+    * 支持自动同步和详细日志
+  - **docs/HYBRID-MODE-SETUP.md** - 5分钟快速设置指南
+    * PowerShell Profile配置示例
+    * 完整的使用场景说明（在线/离线）
+    * 性能对比表格
+    * 详细的故障排除指南
 - 📋 **COMMANDS.md** - Darwin命令速查手册
   - 完整的dr-*命令系统文档
   - 详细的参数说明和示例

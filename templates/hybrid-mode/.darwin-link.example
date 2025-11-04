@@ -1,0 +1,54 @@
+{
+  "version": "1.0.0",
+  "mode": "hybrid",
+  "description": "混合模式配置 - 优先GitHub，回退本地",
+  
+  "commonRules": {
+    "sources": [
+      {
+        "type": "github",
+        "url": "https://raw.githubusercontent.com/laiyinyizao007/darwinRules/main",
+        "priority": 1,
+        "description": "GitHub在线（优先）- 总是最新"
+      },
+      {
+        "type": "local",
+        "path": "C:\\Dev\\global-config\\darwinRules",
+        "priority": 2,
+        "description": "本地备份（回退）- GitHub不可用时使用",
+        "fallback": true
+      }
+    ],
+    
+    "loadOrder": [
+      "core/rules.mdc",
+      "core/mcp-tools.mdc",
+      "core/darwin-guide.mdc",
+      "core/directory-structure.mdc",
+      "core/ACT/implement.mdc",
+      "core/ACT/debug.mdc",
+      "core/PLAN/plan.mdc"
+    ],
+    
+    "loader": "C:\\Dev\\global-config\\darwinRules\\scripts\\utils\\smart-loader.ps1",
+    "enabled": true
+  },
+  
+  "projectRules": {
+    "path": ".clinerules/project-specific",
+    "loadOrder": [
+      "custom-rules.mdc",
+      "project-memory.mdc"
+    ],
+    "enabled": true
+  },
+  
+  "priority": "common-first",
+  
+  "options": {
+    "autoSync": true,
+    "syncOnStartup": true,
+    "verboseLogging": false,
+    "alwaysUseGitHub": true
+  }
+}
