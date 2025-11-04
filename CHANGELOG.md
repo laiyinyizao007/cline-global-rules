@@ -30,6 +30,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - 推荐使用dr-update进行同步
   - 添加命令手册链接
 
+### Documentation
+- 📋 **AUTO-SETUP.md** - 自动化配置完整指南
+  - 三种实施方案（本地镜像/在线模式/混合模式）
+  - PowerShell Profile自动同步配置
+  - VS Code任务集成
+  - 完整的故障排除指南
+  - 性能优化建议
+
 ## [2.0.0] - 2025-11-04
 
 ### Added
